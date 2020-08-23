@@ -26,6 +26,7 @@ class AddContactsActivity : AppCompatActivity() {
         }
         binding.blockButton.setOnClickListener {
             if (binding.numberInput.text.isNotEmpty()) {
+                binding.numberInput.text.clear()
                 blockContactNumber(binding.numberInput.text.toString())
             } else {
                 binding.numberInput.error = "please insert a number to block!"

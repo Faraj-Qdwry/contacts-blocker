@@ -14,6 +14,7 @@ abstract class AppDatabase : RoomDatabase() {
         private var appDb: AppDatabase? = null
 
         @JvmStatic
+        @Synchronized
         fun getAppDb(context: Context): AppDatabase {
             if (appDb == null) {
                 appDb = Room.databaseBuilder(
