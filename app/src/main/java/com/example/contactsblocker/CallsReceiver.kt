@@ -12,18 +12,19 @@ class CallsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         // If, the received action is not a type of "Phone_State", ignore it
-        if (intent.action != "android.intent.action.PHONE_STATE") return else {
+        if (intent.action == "android.intent.action.PHONE_STATE") {
             // Fetch the number of incoming call
             val number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
 
-            if (ContactsRepository(context).getBlockedContactsList().filter { it.number == number }.isNotEmpty()){
+            val isNumberBlocked = ContactsRepository(context)
+                .getBlockedContactsList().any { it.number == number }
+
+            if (isNumberBlocked) {
                 disconnectPhoneItelephony(context)
             }
         }
     }
 
-    // Method to disconnect phone automatically and programmatically
-    // Keep this method as it is
     private fun disconnectPhoneItelephony(context: Context) {
         val telephonyService: ITelephony
         val telephony = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
