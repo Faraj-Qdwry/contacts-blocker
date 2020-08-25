@@ -1,12 +1,14 @@
 package com.example.contactsblocker.repo
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.example.contactsblocker.db.AppDatabase
 import com.example.contactsblocker.db.Contact
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ContactsRepository(context: Context) {
+@Singleton
+class ContactsRepository @Inject constructor(context: Context) {
     private val db = AppDatabase.getAppDb(context)
 
     fun getBlockedContacts(): LiveData<List<Contact>> {

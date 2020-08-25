@@ -11,16 +11,28 @@ import android.provider.ContactsContract
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.contactsblocker.databinding.ActivityAddNumberBinding
 import com.example.contactsblocker.db.Contact
+import javax.inject.Inject
 
 
 class AddContactsActivity : AppCompatActivity() {
+
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel: ContactsViewModel
+
     private lateinit var binding: ActivityAddNumberBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_number)
-        binding.viewModel = ContactsViewModel(application)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContactsViewModel::class.java)
+
+        //binding.viewModel = ContactsViewModel(application)
+
         binding.addNumberToBlock.setOnClickListener {
             selectContact()
         }

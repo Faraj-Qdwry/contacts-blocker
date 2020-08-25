@@ -4,19 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.contactsblocker.databinding.ActivityContactsListBinding
+import com.example.contactsblocker.di.ViewModelFactory
+
+import javax.inject.Inject
 
 class ContactsListActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityContactsListBinding
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: ContactsViewModel
+
+    private lateinit var binding: ActivityContactsListBinding
     private lateinit var contactsAdapter: BlockedContactsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts_list)
 
-        viewModel = ContactsViewModel(application)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContactsViewModel::class.java)
+
+        //viewModel = ContactsViewModel(application)
 
         binding.addNumberAction.setOnClickListener {
             startActivity(Intent(this, AddContactsActivity::class.java))

@@ -47,7 +47,18 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation 'androidx.room:room-runtime:2.2.5'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     kapt 'androidx.room:room-compiler:2.2.5'
+
+    /* Dagger2 - We are going to use dagger.android which includes
+     * support for Activity and fragment injection so we need to include
+     * the following dependencies */
+    implementation 'com.google.dagger:dagger-android:2.21'
+    implementation 'com.google.dagger:dagger-android-support:2.21'
+    kapt 'com.google.dagger:dagger-android-processor:2.21'
+
+    /* Dagger2 - default dependency */
+    kapt 'com.google.dagger:dagger-compiler:2.21'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
